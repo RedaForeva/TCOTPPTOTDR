@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица с пин-кодами</title>
+    <link rel="stylesheet" href="test.css"> <!-- Подключаем CSS -->
+</head>
+<body>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Пин-код</th>
+            <th>Действие</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1234</td>
+            <td>
+                <button onclick="setStatus(this, 'green')">V</button>
+                <button onclick="setStatus(this, 'red')">X</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>5678</td>
+            <td>
+                <button onclick="setStatus(this, 'green')">V</button>
+                <button onclick="setStatus(this, 'red')">X</button>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>9101</td>
+            <td>
+                <button onclick="setStatus(this, 'green')">V</button>
+                <button onclick="setStatus(this, 'red')">X</button>
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="test.js"></script> <!-- Подключаем JavaScript -->
+</body>
+</html>
