@@ -6,7 +6,7 @@ from pydantic import BaseModel
 import uvicorn
 
 # Настройка базы данных
-DATABASE_URL = "sqlite:///D:/My_Project/1. Are being made/TestTEst/Testtestov/prodject/pincodes.db"
+DATABASE_URL = "sqlite:///'тут путь к базе данных'"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
