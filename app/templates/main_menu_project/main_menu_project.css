@@ -4,12 +4,16 @@ body {
 }
 
 table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
 }
 
 th, td {
     padding: 10px;
+    text-align: left;
+}
+
+.center-text {
     text-align: center;
 }
 
