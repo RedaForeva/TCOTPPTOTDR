@@ -1,9 +1,22 @@
+/* Пример стилей для таблицы и кнопок */
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
 .green {
-    background-color: green; /* Устанавливает зеленый цвет фона для элементов с классом "green" */
-    color: white; /* Устанавливает белый цвет текста для элементов с классом "green" */
+    background-color: #d4edda; /* Светло-зеленый цвет для одобренных */
 }
 
 .red {
-    background-color: red; /* Устанавливает красный цвет фона для элементов с классом "red" */
-    color: white; /* Устанавливает белый цвет текста для элементов с классом "red" */
+    background-color: #f8d7da; /* Светло-красный цвет для отклоненных */
 }
