@@ -8,51 +8,36 @@ const pinCodes = [
 // Массивы для хранения пин-кодов по статусу
 const approvedPins = [];
 const rejectedPins = [];
+let currentIndex = 0;
+
+function displayCurrentPinCode() {
+    const currentPinCodeElement = document.getElementById('currentPinCode');
+    
+    if (currentIndex < pinCodes.length) {
+        currentPinCodeElement.textContent = pinCodes[currentIndex].code;
+    } else {
+        currentPinCodeElement.textContent = approvedPins.length > 0 
+            ? 'Пароль найден, можно прекратить поиски' 
+            : 'Все пин-коды обработаны';
+    }
+}
 
 function setStatus(button, color) {
-    // Находим родительский элемент <tr> (строку таблицы), к которому принадлежит кнопка
-    const row = button.closest('tr');
-    // Получаем ячейку статуса (третью ячейку в строке)
-    const statusCell = row.cells[2];
+    const pinCode = pinCodes[currentIndex];
 
-    // Удаляем предыдущие классы 'green' и 'red' из строки
-    row.classList.remove('green', 'red');
-
-    // Обновляем статус в массиве
-    const pinCodeCell = row.cells[0];
-    const pinCode = pinCodes.find(pin => pin.code === pinCodeCell.textContent);
-    
     if (pinCode) {
-        // Удаляем пин-код из соответствующего массива, если он уже там есть
-        if (pinCode.status === 'Подходит') {
-            const index = approvedPins.findIndex(pin => pin.code === pinCode.code);
-            if (index !== -1) {
-                approvedPins.splice(index, 1);
-            }
-        } else if (pinCode.status === 'Не подходит') {
-            const index = rejectedPins.findIndex(pin => pin.code === pinCode.code);
-            if (index !== -1) {
-                rejectedPins.splice(index, 1);
-            }
-        }
-
-        // Устанавливаем новый статус
-        pinCode.status = color === 'green' ? 'Подходит' : 'Не подходит';
-
-        // Добавляем пин-код в соответствующий массив
         if (color === 'green') {
+            pinCode.status = 'Подходит';
             approvedPins.push(pinCode);
-            row.classList.add('green');
-            statusCell.textContent = 'Одобрено';
             console.log(`Пин-код ${pinCode.code} подходит.`);
         } else if (color === 'red') {
+            pinCode.status = 'Не подходит';
             rejectedPins.push(pinCode);
-            row.classList.add('red');
-            statusCell.textContent = 'Отклонено';
             console.log(`Пин-код ${pinCode.code} не подходит.`);
         }
 
-        // Обновляем таблицы одобренных и отклоненных пин-кодов
+        currentIndex++;
+        displayCurrentPinCode();
         updateStatusTables();
     }
 }
@@ -68,7 +53,14 @@ function updateStatusTables() {
     // Добавляем одобренные пин-коды
     approvedPins.forEach(pin => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${pin.code}</td><td>Одобрено</td>`;
+        row.innerHTML = `
+            <td>${pin.code}</td>
+            <td>Одобрено</td>
+            <td>
+                <button onclick="confirmPin('${pin.code}')">V</button>
+                <button onclick="rejectPin('${pin.code}')">X</button>
+            </td>
+        `;
         approvedTableBody.appendChild(row);
     });
 
@@ -76,16 +68,28 @@ function updateStatusTables() {
     rejectedPins.forEach(pin => {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${pin.code}</td><td>Отклонено</td>`;
+        row.style.backgroundColor = 'lightcoral'; // Красный цвет для отклоненного пин-кода
         rejectedTableBody.appendChild(row);
     });
 }
 
-function generateCodes() {
-    // Логика генерации новых пин-кодов
-    console.log("Генерация новых пин-кодов...");
+function confirmPin(pinCode) {
+    // Логика для подтверждения пин-кода
+    console.log(`Пин-код ${pinCode} подтвержден. Поиск прекращен.`);
+    // Здесь можно добавить логику для завершения поиска
 }
 
-function shareWithFriend() {
-    // Логика для поделиться с другом
-    console.log("Поделиться с другом...");
+function rejectPin(pinCode) {
+    // Логика для отклонения пин-кода
+    const index = approvedPins.findIndex(pin => pin.code === pinCode);
+    if (index !== -1) {
+        approvedPins.splice(index, 1);
+        console.log(`Пин-код ${pinCode} отклонен.`);
+        updateStatusTables();
+    }
 }
+
+// Инициализация отображения первого пин-кода при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    displayCurrentPinCode();
+});

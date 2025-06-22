@@ -17,43 +17,13 @@
     <button onclick="shareWithFriend()" style="flex: 1;">Поделиться с другом</button> <!-- Кнопка для поделиться с другом -->
 </div>
 
-<!-- Таблица для всех пин-кодов -->
-<h2 class="center-text">Все пин-коды</h2>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Пин-код</th> <!-- Заголовок для столбца с пин-кодами -->
-            <th>Действие</th> <!-- Заголовок для столбца с кнопками действий -->
-            <th>Статус</th> <!-- Заголовок для столбца со статусом -->
-        </tr>
-    </thead>
-    <tbody id="pinTableBody">
-        <tr>
-            <td>1234</td>
-            <td>
-                <button onclick="setStatus(this, 'green')">V</button>
-                <button onclick="setStatus(this, 'red')">X</button>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>5678</td>
-            <td>
-                <button onclick="setStatus(this, 'green')">V</button>
-                <button onclick="setStatus(this, 'red')">X</button>
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>9101</td>
-            <td>
-                <button onclick="setStatus(this, 'green')">V</button>
-                <button onclick="setStatus(this, 'red')">X</button>
-            </td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+<!-- Форма для отображения текущего пин-кода -->
+<div id="pinCodeForm">
+    <h2 class="center-text">Текущий пин-код</h2>
+    <p id="currentPinCode"></p>
+    <button onclick="setStatus(this, 'green')">V</button>
+    <button onclick="setStatus(this, 'red')">X</button>
+</div>
 
 <!-- Таблица для одобренных пин-кодов -->
 <h2 class="center-text">Одобренные пин-коды</h2>
@@ -62,6 +32,7 @@
         <tr>
             <th>Пин-код</th>
             <th>Статус</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody id="approvedPinTableBody">
@@ -83,5 +54,9 @@
     </tbody>
 </table>
 
+<!-- Сообщение о завершении обработки -->
+<p id="finalMessage" class="center-text"></p>
+
+<script src="script.js"></script> <!-- Подключаем JavaScript для функциональности -->
 </body>
 </html>
