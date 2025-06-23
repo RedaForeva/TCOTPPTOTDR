@@ -16,7 +16,9 @@ function displayCurrentPinCode() {
     if (currentIndex < pinCodes.length) {
         currentPinCodeElement.textContent = pinCodes[currentIndex].code;
     } else {
-        currentPinCodeElement.textContent = approvedPins.length > 0 
+        // Проверяем, был ли подтвержден хотя бы один пин-код
+        const confirmedPins = approvedPins.filter(pin => pin.status === 'Пароль подтвержден');
+        currentPinCodeElement.textContent = confirmedPins.length > 0 
             ? 'Пароль найден, можно прекратить поиски' 
             : 'Все пин-коды обработаны';
     }
@@ -76,15 +78,43 @@ function updateStatusTables() {
 function confirmPin(pinCode) {
     // Логика для подтверждения пин-кода
     console.log(`Пин-код ${pinCode} подтвержден. Поиск прекращен.`);
-    // Здесь можно добавить логику для завершения поиска
+    
+    // Находим индекс подтвержденного пин-кода
+    const index = approvedPins.findIndex(pin => pin.code === pinCode);
+    if (index !== -1) {
+        // Удаляем пин-код из массива одобренных
+        const confirmedPin = approvedPins.splice(index, 1)[0];
+        
+        // Обновляем таблицы
+        updateStatusTables();
+        
+        // Отображаем сообщение о подтверждении
+        const approvedTableBody = document.getElementById('approvedPinTableBody');
+        
+        // Очищаем таблицу одобренных пин-кодов
+        approvedTableBody.innerHTML = '';
+        
+        // Добавляем строку с подтвержденным пин-кодом
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${confirmedPin.code}</td><td>Пароль подтвержден</td>`;
+        approvedTableBody.appendChild(row);
+        
+        // Скрываем текущий пин-код
+        const currentPinCodeElement = document.getElementById('currentPinCode');
+        currentPinCodeElement.textContent = 'Пароль подтвержден';
+    }
 }
 
 function rejectPin(pinCode) {
     // Логика для отклонения пин-кода
     const index = approvedPins.findIndex(pin => pin.code === pinCode);
     if (index !== -1) {
-        approvedPins.splice(index, 1);
+        // Перемещаем пин-код в отклоненные
+        const rejectedPin = approvedPins.splice(index, 1)[0];
+        rejectedPins.push(rejectedPin);
         console.log(`Пин-код ${pinCode} отклонен.`);
+        
+        // Обновляем таблицы
         updateStatusTables();
     }
 }
