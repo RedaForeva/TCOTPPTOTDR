@@ -5,6 +5,9 @@ const pinCodes = [
     { code: '9101', status: '' }
 ];
 
+// Массив для хранения необработанных пин-кодов
+//const unprocessedPins = [...pinCodes]; // Копируем массив pinCodes доработать
+
 // Массивы для хранения пин-кодов по статусу
 const approvedPins = [];
 const rejectedPins = [];
