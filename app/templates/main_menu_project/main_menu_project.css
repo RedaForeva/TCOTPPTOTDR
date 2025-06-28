@@ -1,16 +1,109 @@
-/* Пример стилей для таблицы и кнопок */
+/* Основные стили для страницы */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Светлый фон для страницы */
+    margin: 0;
+    padding: 20px;
 }
 
-table {
-    width: auto;
-    border-collapse: collapse;
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.action-button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff; /* Синий цвет для кнопок */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-button:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+}
+
+.pin-code-form {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white; /* Белый фон для формы */
+    border: 1px solid #ccc; /* Светло-серый цвет для границы */  
+    border-radius: 5px; /* Закругленные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для эффекта поднятия */
+}
+
+.current-pin {
+    font-size: 24px; /* Увеличенный размер шрифта для текущего пин-кода */
+    margin: 10px 0; /* Отступы сверху и снизу */
+    font-weight: bold; /* Жирный шрифт */
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки */
+    margin-top: 10px; /* Отступ сверху */
+}
+
+.status-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 5px; /* Отступы между кнопками */
+}
+
+.status-button.green {
+    background-color: #28a745; /* Зеленый цвет для одобрения */
+}
+
+.status-button.green:hover {
+    background-color: #218838; /* Темнее при наведении */
+}
+
+.status-button.red {
+    background-color: #dc3545; /* Красный цвет для отклонения */
+}
+
+.status-button.red:hover {
+    background-color: #c82333; /* Темнее при наведении */
+}
+
+.styled-table {
+    width: 100%; /* Ширина таблицы на 100% */
+    border-collapse: collapse; /* Убираем двойные границы */
+    margin-bottom: 20px; /* Отступ снизу */
+    background-color: white; /* Белый фон для таблицы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень для таблицы */
 }
 
 th, td {
     padding: 10px;
     text-align: left;
+    border: 1px solid #ddd; /* Светло-серая граница для ячеек */
+}
+
+th {
+    background-color: #f8f9fa; /* Светло-серый фон для заголовков */
+    font-weight: bold; /* Жирный шрифт для заголовков */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Цвет при наведении на строку */
 }
 
 .center-text {

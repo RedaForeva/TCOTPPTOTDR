@@ -1,59 +1,51 @@
-// Массив для хранения пин-кодов
+// Массив для хранения пин-кодов с их статусами
 const pinCodes = [
     { code: '1234', status: '' },
     { code: '5678', status: '' },
     { code: '9101', status: '' }
 ];
 
-// Массив для хранения необработанных пин-кодов
-//const unprocessedPins = [...pinCodes]; // Копируем массив pinCodes доработать
-
 // Массивы для хранения пин-кодов по статусу
 const approvedPins = [];
 const rejectedPins = [];
 let currentIndex = 0;
 
+// Отображение текущего пин-кода или сообщения о завершении
 function displayCurrentPinCode() {
     const currentPinCodeElement = document.getElementById('currentPinCode');
-    
     if (currentIndex < pinCodes.length) {
         currentPinCodeElement.textContent = pinCodes[currentIndex].code;
     } else {
-        // Проверяем, был ли подтвержден хотя бы один пин-код
-        const confirmedPins = approvedPins.filter(pin => pin.status === 'Пароль подтвержден');
-        currentPinCodeElement.textContent = confirmedPins.length > 0 
+        const hasApproved = approvedPins.some(pin => pin.status === 'Пароль подтвержден');
+        currentPinCodeElement.textContent = hasApproved 
             ? 'Пароль найден, можно прекратить поиски' 
             : 'Все пин-коды обработаны';
     }
 }
 
+// Установка статуса пин-кода и обновление индекса
 function setStatus(button, color) {
     const pinCode = pinCodes[currentIndex];
-
     if (pinCode) {
-        if (color === 'green') {
-            pinCode.status = 'Подходит';
-            approvedPins.push(pinCode);
-            console.log(`Пин-код ${pinCode.code} подходит.`);
-        } else if (color === 'red') {
-            pinCode.status = 'Не подходит';
-            rejectedPins.push(pinCode);
-            console.log(`Пин-код ${pinCode.code} не подходит.`);
-        }
-
+        pinCode.status = color === 'green' ? 'Подходит' : 'Не подходит';
+        (color === 'green' ? approvedPins : rejectedPins).push(pinCode);
+        console.log(`Пин-код ${pinCode.code} ${color === 'green' ? 'подходит' : 'не подходит'}.`);
         currentIndex++;
         displayCurrentPinCode();
         updateStatusTables();
     }
 }
 
+// Обновление таблиц одобренных, отклоненных и необработанных пин-кодов
 function updateStatusTables() {
     const approvedTableBody = document.getElementById('approvedPinTableBody');
     const rejectedTableBody = document.getElementById('rejectedPinTableBody');
+    const unprocessedTableBody = document.getElementById('unprocessedPinTableBody');
 
     // Очищаем таблицы
     approvedTableBody.innerHTML = '';
     rejectedTableBody.innerHTML = '';
+    unprocessedTableBody.innerHTML = '';
 
     // Добавляем одобренные пин-коды
     approvedPins.forEach(pin => {
@@ -76,53 +68,47 @@ function updateStatusTables() {
         row.style.backgroundColor = 'lightcoral'; // Красный цвет для отклоненного пин-кода
         rejectedTableBody.appendChild(row);
     });
+
+    // Добавляем необработанные пин-коды
+    pinCodes.forEach(pin => {
+        if (!pin.status) { // Проверяем, что пин-код еще не обработан
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${pin.code}</td>
+                <td>Необработан</td>
+                <td>
+                    <button onclick="setStatus(this, 'green')">Одобрить</button>
+                    <button onclick="setStatus(this, 'red')">Отклонить</button>
+                </td>
+            `;
+            unprocessedTableBody.appendChild(row);
+        }
+    });
 }
 
+// Подтверждение пин-кода и обновление таблицы
 function confirmPin(pinCode) {
-    // Логика для подтверждения пин-кода
-    console.log(`Пин-код ${pinCode} подтвержден. Поиск прекращен.`);
-    
-    // Находим индекс подтвержденного пин-кода
     const index = approvedPins.findIndex(pin => pin.code === pinCode);
     if (index !== -1) {
-        // Удаляем пин-код из массива одобренных
         const confirmedPin = approvedPins.splice(index, 1)[0];
-        
-        // Обновляем таблицы
         updateStatusTables();
-        
-        // Отображаем сообщение о подтверждении
         const approvedTableBody = document.getElementById('approvedPinTableBody');
-        
-        // Очищаем таблицу одобренных пин-кодов
-        approvedTableBody.innerHTML = '';
-        
-        // Добавляем строку с подтвержденным пин-кодом
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${confirmedPin.code}</td><td>Пароль подтвержден</td>`;
-        approvedTableBody.appendChild(row);
-        
-        // Скрываем текущий пин-код
-        const currentPinCodeElement = document.getElementById('currentPinCode');
-        currentPinCodeElement.textContent = 'Пароль подтвержден';
+        approvedTableBody.innerHTML = `<tr><td>${confirmedPin.code}</td><td>Пароль подтвержден</td></tr>`;
+        document.getElementById('currentPinCode').textContent = 'Пароль подтвержден';
+        console.log(`Пин-код ${pinCode} подтвержден. Поиск прекращен.`);
     }
 }
 
+// Отклонение пин-кода и обновление таблицы
 function rejectPin(pinCode) {
-    // Логика для отклонения пин-кода
     const index = approvedPins.findIndex(pin => pin.code === pinCode);
     if (index !== -1) {
-        // Перемещаем пин-код в отклоненные
-        const rejectedPin = approvedPins.splice(index, 1)[0];
-        rejectedPins.push(rejectedPin);
+        // Перемещаем отклоненный пин-код из одобренных в отклоненные
+        rejectedPins.push(approvedPins.splice(index, 1)[0]);
         console.log(`Пин-код ${pinCode} отклонен.`);
-        
-        // Обновляем таблицы
-        updateStatusTables();
+        updateStatusTables(); // Обновляем таблицы после отклонения
     }
 }
 
 // Инициализация отображения первого пин-кода при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    displayCurrentPinCode();
-});
+document.addEventListener('DOMContentLoaded', displayCurrentPinCode);

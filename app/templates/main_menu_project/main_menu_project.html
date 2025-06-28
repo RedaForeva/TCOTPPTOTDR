@@ -11,23 +11,25 @@
 <body>
 
 <!-- Строка с логотипом и кнопками -->
-<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-    <img src="logo.png" alt="Логотип" style="max-width: 200px; margin-right: 20px;"> <!-- Замените "logo.png" на путь к вашему изображению -->
-    <button onclick="generateCodes()" style="flex: 1; margin-right: 10px;">Генерация кодов</button> <!-- Кнопка для генерации кодов -->
-    <button onclick="shareWithFriend()" style="flex: 1;">Поделиться с другом</button> <!-- Кнопка для поделиться с другом -->
+<div class="header">
+    <img src="logo.png" alt="Логотип" class="logo"> <!-- Замените "logo.png" на путь к вашему изображению -->
+    <button onclick="generateCodes()" class="action-button">Генерация кодов</button> <!-- Кнопка для генерации кодов -->
+    <button onclick="shareWithFriend()" class="action-button">Поделиться с другом</button> <!-- Кнопка для поделиться с другом -->
 </div>
 
 <!-- Форма для отображения текущего пин-кода -->
-<div id="pinCodeForm">
+<div id="pinCodeForm" class="pin-code-form">
     <h2 class="center-text">Текущий пин-код</h2>
-    <p id="currentPinCode"></p>
-    <button onclick="setStatus(this, 'green')">V</button>
-    <button onclick="setStatus(this, 'red')">X</button>
+    <p id="currentPinCode" class="current-pin"></p>
+    <div class="button-group">
+        <button onclick="setStatus(this, 'green')" class="status-button green">V</button>
+        <button onclick="setStatus(this, 'red')" class="status-button red">X</button>
+    </div>
 </div>
 
 <!-- Таблица для одобренных пин-кодов -->
 <h2 class="center-text">Одобренные пин-коды</h2>
-<table border="1">
+<table class="styled-table">
     <thead>
         <tr>
             <th>Пин-код</th>
@@ -42,7 +44,7 @@
 
 <!-- Таблица для отклоненных пин-кодов -->
 <h2 class="center-text">Отклоненные пин-коды</h2>
-<table border="1">
+<table class="styled-table">
     <thead>
         <tr>
             <th>Пин-код</th>
@@ -54,31 +56,22 @@
     </tbody>
 </table>
 
-
-<!-- Таблица для всех пин-кодов -->
-<h2>Все пин-коды</h2>
-<table border="1">
+<!-- Таблица для необработанных пин-кодов -->
+<h2 class="center-text">Необработанные пин-коды</h2>
+<table class="styled-table">
     <thead>
         <tr>
-            <th>Пин-код</th> <!-- Заголовок для столбца с пин-кодами -->
+            <th>Пин-код</th>
+            <th>Статус</th>
+            <th>Действия</th>
         </tr>
     </thead>
-    <tbody id="pinTableBody">
-        <tr>
-            <td>1234</td>
-        </tr>
-        <tr>
-            <td>5678</td>
-        </tr>
-        <tr>
-            <td>9101</td>
-        </tr>
+    <tbody id="unprocessedPinTableBody">
+        <!-- Здесь будут отображаться необработанные пин-коды -->
     </tbody>
 </table>
 
 <!-- Сообщение о завершении обработки -->
 <p id="finalMessage" class="center-text"></p>
-
-<script src="script.js"></script> <!-- Подключаем JavaScript для функциональности -->
 </body>
 </html>
