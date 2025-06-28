@@ -3,9 +3,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="static")  # Указываем только директорию
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index(request: Request):
-    items = ["Item 1", "Item 2", "Item 3"]
-    return templates.TemplateResponse("index.html", {"request": request, "items": items})
+    # Просто возвращаем HTML-страницу без дополнительных объектов
+    return templates.TemplateResponse("main_menu_project/main_menu_project.html", {"request": request})
