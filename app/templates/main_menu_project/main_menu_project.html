@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Таблица с пин-кодами</title>
-    <link rel="stylesheet" href="main_menu_project.css"> <!-- Подключаем CSS для стилизации страницы -->
-    <script src="main_menu_project.js" defer></script> <!-- Скрипт будет выполнен после загрузки HTML -->
+    <link rel="stylesheet" href="/static/main_menu_project/main_menu_project.css"> <!-- Подключаем CSS для стилизации страницы -->
+    <script src="/static/main_menu_project/main_menu_project.js" defer></script> <!-- Скрипт будет выполнен после загрузки HTML -->
 </head>
 
 <body>
 
 <!-- Строка с логотипом и кнопками -->
 <div class="header">
-    <img src="logo.png" alt="Логотип" class="logo"> <!-- Замените "logo.png" на путь к вашему изображению -->
+    <img src="/static/images/logo.png" alt="Логотип" class="logo"> <!-- Замените "logo.png" на путь к вашему изображению -->
     <button onclick="generateCodes()" class="action-button">Генерация кодов</button> <!-- Кнопка для генерации кодов -->
     <button onclick="shareWithFriend()" class="action-button">Поделиться с другом</button> <!-- Кнопка для поделиться с другом -->
 </div>
