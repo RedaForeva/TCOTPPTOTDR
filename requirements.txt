@@ -1,0 +1,9 @@
+fastapi[all]
+requests
+sqlalchemy
+python-multipart
+pytest
+httpie
+httpx
+python-jose
+passlib
